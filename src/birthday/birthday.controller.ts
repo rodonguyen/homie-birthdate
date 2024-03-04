@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { JwtGuard } from '../auth/guard';
-import { BirthdayService } from './bookmark.service';
+import { BirthdayService } from './birthday.service';
 import { GetUser } from '../auth/decorator/getUser.decorator';
 import { CreateBirthdayDto, EditBirthdayDto } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('bookmarks')
-export class BookmarkController {
+export class BirthdayController {
   constructor(private bookmarkService: BirthdayService) {}
 
   // @Post()

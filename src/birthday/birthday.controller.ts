@@ -4,34 +4,42 @@ import { BirthdayService } from './birthday.service';
 import { GetUser } from '../auth/decorator/getUser.decorator';
 import { CreateBirthdayDto, EditBirthdayDto } from './dto';
 
-@UseGuards(JwtGuard)
-@Controller('bookmarks')
+@Controller('birthdays')
 export class BirthdayController {
-  constructor(private bookmarkService: BirthdayService) {}
+  constructor(private birthdayService: BirthdayService) {}
 
-  // @Post()
-  // createBookmark(@GetUser("id") userId: number, @Body() createBookmarkDto: CreateBirthdayDto) {
-  //   return this.bookmarkService.createBookmark(userId, createBookmarkDto);
-  // }
+  @UseGuards(JwtGuard)
+  @Post()
+  createBirthday(@GetUser("id") userId: number, @Body() createBookmarkDto: CreateBirthdayDto) {
+    return this.birthdayService.createbirthday(userId, createBookmarkDto);
+  }
 
-  // @Get()
-  // getBookmarks(@GetUser("id") userId: number) {
-  //   return this.bookmarkService.getBookmarks(userId);
-  // }
+  @UseGuards(JwtGuard)
+  @Get()
+  getBookmarks(@GetUser("id") userId: number) {
+    return this.birthdayService.getBirthdays(userId);
+  }
+
+  @Get(":c")
+  getTodayBirthdays(@Param("c") code: string) {
+    return this.birthdayService.getTodayBirthdays(code);
+  }
 
   // @Get(':id')
   // getBookmarkById(@GetUser("id") userId: number, @Param("id", ParseIntPipe) bookmarkId: number) {
-  //   return this.bookmarkService.getBookmarkById(userId, bookmarkId);
+  //   return this.birthdayService.getBirthdayById(userId, bookmarkId);
   // }
 
-  // @Patch(':id')
-  // editBookmarkById(@GetUser("id") userId: number, @Param('id', ParseIntPipe) bookmarkId, @Body() editBookmarkDto: EditBirthdayDto) {
-  //   return this.bookmarkService.editBookmarkById(userId, bookmarkId, editBookmarkDto);
-  // }
+  @UseGuards(JwtGuard)
+  @Patch(':id')
+  editBookmarkById(@GetUser("id") userId: number, @Param('id', ParseIntPipe) bookmarkId, @Body() editBookmarkDto: EditBirthdayDto) {
+    return this.birthdayService.editBirthdayById(userId, bookmarkId, editBookmarkDto);
+  }
 
-  // @Delete(':id')
-  // deleteBookmarkById(@GetUser("id") userId: number, @Param("id", ParseIntPipe) bookmarkId: number) {
-  //   return this.bookmarkService.deleteBookmarkById(userId, bookmarkId);
-  // }
+  @UseGuards(JwtGuard)
+  @Delete(':id')
+  deleteBookmarkById(@GetUser("id") userId: number, @Param("id", ParseIntPipe) bookmarkId: number) {
+    return this.birthdayService.deleteBirthdayById(userId, bookmarkId);
+  }
 }
 

@@ -12,16 +12,16 @@ export class BirthdayService {
   constructor(private prismaService: PrismaService) {}
 
   async createbirthday(userId: number, dto: CreateBirthdayDto) {
-    // const birthday = await this.prismaService.birthday.create({
-    //   data: {
-    //     userId,
-    //     ...dto,
-    //   },
-    // });
-    // return birthday;
+    const birthday = await this.prismaService.birthday.create({
+      data: {
+        ...dto,
+        userId,
+      },
+    });
+    return birthday;
   }
 
-  async getbirthdays(userId: number): Promise<Birthday[]> {
+  async getBirthdays(userId: number): Promise<Birthday[]> {
     return this.prismaService.birthday.findMany({
       where: {
         userId,
@@ -29,26 +29,35 @@ export class BirthdayService {
     });
   }
 
-  async getbirthdayById(userId: number, birthdayId: number): Promise<Birthday> {
-    const birthday = await this.prismaService.birthday.findFirst({
+  async getTodayBirthdays(code: string): Promise<Birthday[]> {
+    // get user id from user table that has code==code or email==code
+    const user = await this.prismaService.user.findFirst({
       where: {
-        id: birthdayId,
-        userId,
+        OR: [
+          {
+            accessCode: code,
+          },
+          {
+            email: code,
+          },
+        ],
       },
     });
 
-    if (!birthday) {
-      throw new NotFoundException("birthday not found");
+    if (!user || !user.id) {
+      throw new NotFoundException("Code is invalid");
     }
 
-    return birthday;
+    return this.prismaService.birthday.findMany({
+      where: {
+        userId: user.id,
+        day: new Date().getDate(),
+        month: new Date().getMonth(),
+      },
+    });
   }
 
-  // async editbirthdayById(
-  //   userId: number,
-  //   birthdayId: number,
-  //   dto: EditBirthdayDto,
-  // ): Promise<Birthday> {
+  // async getBirthdayById(userId: number, birthdayId: number): Promise<Birthday> {
   //   const birthday = await this.prismaService.birthday.findFirst({
   //     where: {
   //       id: birthdayId,
@@ -60,16 +69,36 @@ export class BirthdayService {
   //     throw new NotFoundException("birthday not found");
   //   }
 
-  //   return this.prismaService.birthday.update({
-  //     where: {
-  //       id: birthdayId,
-  //     },
-  //     data: {
-  //       ...dto,
-  //     },
-  //   });
+  //   return birthday;
   // }
-  async deletebirthdayById(userId: number, birthdayId: number) {
+
+  async editBirthdayById(
+    userId: number,
+    birthdayId: number,
+    dto: EditBirthdayDto,
+  ): Promise<Birthday> {
+    const birthday = await this.prismaService.birthday.findFirst({
+      where: {
+        id: birthdayId,
+        userId,
+      },
+    });
+
+    if (!birthday) {
+      throw new NotFoundException("Birthday not found");
+    }
+
+    return this.prismaService.birthday.update({
+      where: {
+        id: birthdayId,
+      },
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  async deleteBirthdayById(userId: number, birthdayId: number) {
     const birthday = await this.prismaService.birthday.findUnique({
       where: {
         id: birthdayId,

@@ -1,15 +1,27 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString, IsNumber } from "class-validator";
 
 export class EditBirthdayDto {
   @IsString()
   @IsOptional()
-  title: string;
+  name: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  nickname?: string;
 
   @IsString()
   @IsOptional()
-  link?: string;
+  message?: string;
+  
+  @IsNumber()
+  @IsOptional()
+  day: number;
+  
+  @IsNumber()
+  @IsOptional()
+  month: number;
+  
+  @IsNumber()
+  @IsOptional()
+  year?: number;
 }

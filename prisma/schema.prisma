@@ -20,8 +20,8 @@ model User {
 
   firstName String
   lastName  String
-  dob       DateTime?
 
+  accessCode String? @unique
   birthdays Birthday[]
 
   @@map("users")
@@ -35,7 +35,9 @@ model Birthday {
   name           String
   nickname       String?
   message        String?
-  date           DateTime
+  day            Int
+  month          Int
+  year           Int?
 
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)

@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { AccessTokenDto, SignUpDto } from "./dto";
+import { AccessTokenDto, SignInDto, SignUpDto } from "./dto";
 import * as argon from "argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { JwtService } from "@nestjs/jwt";
@@ -32,11 +32,11 @@ export class AuthService {
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
-          return {
-            success: false,
-            message: "Email already taken",
-          }
-          // throw new ForbiddenException("Credentials taken");
+          // return {
+          //   success: false,
+          //   message: "Email already taken",
+          // }
+          throw new ForbiddenException("Credentials taken");
         }
       }
       throw error;
@@ -49,7 +49,7 @@ export class AuthService {
     };
   }
 
-  async signin(dto: SignUpDto) : Promise<AccessTokenDto> {
+  async signin(dto: SignInDto) : Promise<AccessTokenDto> {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: dto.email,

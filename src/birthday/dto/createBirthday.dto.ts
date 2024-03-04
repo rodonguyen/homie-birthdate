@@ -1,15 +1,25 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateBirthdayDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
+  name: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  nickname?: string;
 
   @IsString()
   @IsOptional()
-  link?: string;
+  message?: string;
+  
+  @IsNumber()
+  day: number;
+  
+  @IsNumber()
+  month: number;
+  
+  @IsNumber()
+  @IsOptional()
+  year?: number;
 }

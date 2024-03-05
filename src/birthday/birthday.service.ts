@@ -52,7 +52,7 @@ export class BirthdayService {
       where: {
         userId: user.id,
         day: new Date().getDate(),
-        month: new Date().getMonth(),
+        month: new Date().getMonth()+1,
       },
     });
   }

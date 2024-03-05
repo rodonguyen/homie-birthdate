@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // validates incoming client payloads against some set of rules, which are typically defined using decorators in DTO (Data Transfer Object) classes.
   // The whitelist: true option means that the ValidationPipe will strip away any properties in the request payload that do not have any decorators associated with them in the DTO class
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -47,12 +47,30 @@ export class BirthdayService {
     if (!user || !user.id) {
       throw new NotFoundException("Code is invalid");
     }
+    
+    const currentDate = new Date().toLocaleString("en-US", { timeZone: "Australia/Brisbane" });
+    console.log('currentDate', currentDate)
+    const currentHour = new Date(currentDate).getHours();
+    let queryFromDate = new Date(currentDate).getDate();
+    let queryToDate = new Date(currentDate).getDate();
+    const currentMonth = new Date(currentDate).getMonth() + 1;
+    
+    // Get birthdays from tomorrow if past 21:00 and yesterday if earlier than 6:00 (Brisbane time)
+    if (currentHour > 21) {
+      queryToDate = queryToDate + 1;
+    } 
+    else if (currentHour < 6) {
+      queryFromDate = queryFromDate - 1;
+    }
 
     return this.prismaService.birthday.findMany({
       where: {
-        userId: user.id,
-        day: new Date().getDate(),
-        month: new Date().getMonth()+1,
+      userId: user.id,
+      day: {
+        gte: queryFromDate,
+        lte: queryToDate,
+      },
+      month: currentMonth,
       },
     });
   }

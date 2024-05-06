@@ -4,11 +4,11 @@ import { UserModule } from "./user/user.module";
 import { BirthdayModule } from "./birthday/birthday.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { ConfigModule } from "@nestjs/config";
-import { HiModule } from './hi/hi.module';
+import { HiModule } from "./hi/hi.module";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     UserModule,
     BirthdayModule,

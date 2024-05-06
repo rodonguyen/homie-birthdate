@@ -15,7 +15,7 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
-  async signup(dto: SignUpDto) : Promise<StandardResponseMessageDto>  {
+  async signup(dto: SignUpDto): Promise<StandardResponseMessageDto> {
     const hash = await argon.hash(dto.password);
     let user;
 
@@ -42,14 +42,14 @@ export class AuthService {
       throw error;
     }
 
-    return { 
+    return {
       success: true,
       message: "Successfully signed up",
-      data: user
+      data: user,
     };
   }
 
-  async signin(dto: SignInDto) : Promise<AccessTokenDto> {
+  async signin(dto: SignInDto): Promise<AccessTokenDto> {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: dto.email,
@@ -68,10 +68,7 @@ export class AuthService {
     return { accessToken: accessToken };
   }
 
-  async signToken(
-    userId: number,
-    email: string,
-  ): Promise<string> {
+  async signToken(userId: number, email: string): Promise<string> {
     const payload = {
       sub: userId,
       email,

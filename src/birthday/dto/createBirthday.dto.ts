@@ -12,13 +12,13 @@ export class CreateBirthdayDto {
   @IsString()
   @IsOptional()
   message?: string;
-  
+
   @IsNumber()
   day: number;
-  
+
   @IsNumber()
   month: number;
-  
+
   @IsNumber()
   @IsOptional()
   year?: number;

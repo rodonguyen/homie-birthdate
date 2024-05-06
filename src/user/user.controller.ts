@@ -7,9 +7,8 @@ import { UserService } from "./user.service";
 import { StandardResponseMessageDto } from "src/dtos";
 
 @UseGuards(JwtGuard)
-@Controller("users")
+@Controller("user")
 export class UserController {
-  
   constructor(private userService: UserService) {}
 
   @Get("me")

@@ -5,7 +5,7 @@ import { PrismaService } from "../src/prisma/prisma.service";
 import * as pactum from "pactum";
 import { SignUpDto } from "src/auth/dto";
 import { EditUserDto } from "src/user/dto";
-import { CreateBirthdayDto, EditBirthdayDto } from "src/birthday/dto";
+// import { CreateBirthdayDto, EditBirthdayDto } from "src/birthday/dto";
 
 describe("App E2E", () => {
   let app: INestApplication;
@@ -38,7 +38,7 @@ describe("App E2E", () => {
       email: "new@gmail.com",
       password: "123",
       firstName: "Dev",
-      lastName: "Veloper"
+      lastName: "Veloper",
     };
     describe("Signup", () => {
       it("should create a user", () => {
@@ -69,7 +69,7 @@ describe("App E2E", () => {
         return pactum
           .spec()
           .post("/auth/signup")
-          .withBody({ })
+          .withBody({})
           .expectStatus(400);
       });
     });
@@ -100,8 +100,8 @@ describe("App E2E", () => {
           .spec()
           .get("/users/me")
           .withHeaders({
-            'Authorization': "Bearer $S{userToken}",
-            'Content-Type': 'application/json'
+            Authorization: "Bearer $S{userToken}",
+            "Content-Type": "application/json",
           })
           .expectStatus(200);
       });
@@ -118,8 +118,8 @@ describe("App E2E", () => {
           .spec()
           .patch("/users")
           .withHeaders({
-            'Authorization': "Bearer $S{userToken}",
-            'Content-Type': 'application/json'
+            Authorization: "Bearer $S{userToken}",
+            "Content-Type": "application/json",
           })
           .withBody(dto)
           .expectStatus(200);
@@ -130,8 +130,8 @@ describe("App E2E", () => {
           .spec()
           .patch("/users")
           .withHeaders({
-            'Authorization': "Bearer $S{userToken}",
-            'Content-Type': 'application/json'
+            Authorization: "Bearer $S{userToken}",
+            "Content-Type": "application/json",
           })
           .withBody({})
           .expectStatus(200)

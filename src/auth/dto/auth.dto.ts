@@ -22,10 +22,6 @@ export class SignUpDto {
   @IsString()
   @IsNotEmpty()
   lastName: string;
-  
-  @IsDate()
-  @IsOptional()
-  dob: string;
 }
 
 export class SignInDto {

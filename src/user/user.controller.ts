@@ -9,7 +9,9 @@ import { StandardResponseMessageDto } from "src/dtos";
 @UseGuards(JwtGuard)
 @Controller("users")
 export class UserController {
+  
   constructor(private userService: UserService) {}
+
   @Get("me")
   getMe(@GetUser() user: User): User {
     return user;

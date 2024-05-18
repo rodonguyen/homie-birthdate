@@ -22,14 +22,14 @@ export class BirthdayController {
   @Post()
   createBirthday(
     @GetUser("id") userId: number,
-    @Body() createBookmarkDto: CreateBirthdayDto,
+    @Body() createBirthdayDto: CreateBirthdayDto,
   ) {
-    return this.birthdayService.createbirthday(userId, createBookmarkDto);
+    return this.birthdayService.createbirthday(userId, createBirthdayDto);
   }
 
   @UseGuards(JwtGuard)
   @Get()
-  getBookmarks(@GetUser("id") userId: number) {
+  getBirthdays(@GetUser("id") userId: number) {
     return this.birthdayService.getBirthdays(userId);
   }
 
@@ -39,30 +39,30 @@ export class BirthdayController {
   }
 
   // @Get(':id')
-  // getBookmarkById(@GetUser("id") userId: number, @Param("id", ParseIntPipe) bookmarkId: number) {
-  //   return this.birthdayService.getBirthdayById(userId, bookmarkId);
+  // getBirthdayById(@GetUser("id") userId: number, @Param("id", ParseIntPipe) birthdayId: number) {
+  //   return this.birthdayService.getBirthdayById(userId, birthdayId);
   // }
 
   @UseGuards(JwtGuard)
   @Patch(":id")
-  editBookmarkById(
+  editBirthdayById(
     @GetUser("id") userId: number,
-    @Param("id", ParseIntPipe) bookmarkId,
-    @Body() editBookmarkDto: EditBirthdayDto,
+    @Param("id", ParseIntPipe) birthdayId,
+    @Body() editBirthdayDto: EditBirthdayDto,
   ) {
     return this.birthdayService.editBirthdayById(
       userId,
-      bookmarkId,
-      editBookmarkDto,
+      birthdayId,
+      editBirthdayDto,
     );
   }
 
   @UseGuards(JwtGuard)
   @Delete(":id")
-  deleteBookmarkById(
+  deleteBirthdayById(
     @GetUser("id") userId: number,
-    @Param("id", ParseIntPipe) bookmarkId: number,
+    @Param("id", ParseIntPipe) birthdayId: number,
   ) {
-    return this.birthdayService.deleteBirthdayById(userId, bookmarkId);
+    return this.birthdayService.deleteBirthdayById(userId, birthdayId);
   }
 }

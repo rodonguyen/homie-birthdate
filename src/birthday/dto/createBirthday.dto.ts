@@ -11,7 +11,11 @@ export class CreateBirthdayDto {
 
   @IsString()
   @IsOptional()
-  message?: string;
+  cardTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  cardMessage?: string;
 
   @IsNumber()
   day: number;
